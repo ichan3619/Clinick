@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Inventory Management</title>
+  <link rel="Stylesheet" href="../Stylesheet/Inventory.css">
+  <script src="https://kit.fontawesome.com/f543d9f8e5.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <div class="sidebar">
+    <button class="back-btn">⤺ Back</button>
+    <div class="icon"><i class="fa-solid fa-clock-rotate-left fa-2x" style="color: #ffffff;"></i></div>
+    <div class="icon"><i class="fa-regular fa-bell fa-2x" style="color: #ffffff;"></i></div>
+    <div class="icon"><i class="fa-solid fa-user fa-2x" style="color: #ffffff;"></i></div>
+  </div>
+
+  <div class="main">
+    <div class="top-bar">
+      <h2>Inventory</h2>
+      <div class="buttons">
+        <button id="addItemBtn">Add Item</button>
+        <button>Update Inventory</button>
+        <button>Usage Graph</button>
+        <button>Archive Inventory</button>
+      </div>
+    </div>
+
+    <div class="subtitle-container">
+      <div class="subtitle">
+        <span><strong>Inventory Items:</strong></span>
+        <label><input type="radio" name="category" value="" checked> All</label>
+        <label><input type="radio" name="category" value="Medicine" > Medicine</label>
+        <label><input type="radio" name="category" value="Medical Supplies"> Medical Supplies</label>
+        <label><input type="radio" name="category" value="Medical Equipments"> Medical Equipment</label>
+      </div>
+      <div class="search-date">
+        <input type="text" id="search-input" placeholder="Search" class="search-box"/>
+        <span class="date-time" id="datetime">Loading...</span>
+      </div>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Inventory No.</th>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Category</th>
+          <th>Dosage</th>
+          <th>Quantity</th>
+          <th>Supply date</th>
+          <th>Expiration Date</th>
+          <th>Archive Item</th>
+        </tr>
+      </thead>
+      <tbody id="inventory-body">
+        <!-- Data will be dynamically inserted here -->
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const tableBody = document.getElementById("inventory-body");
+      const searchInput = document.getElementById("search-input");
+
+      function fetchInventory(category = "", search = "") {
+        fetch(`fetch_inventory.php?category=${category}&search=${encodeURIComponent(search)}`)
+          .then(res => res.json())
+          .then(data => {
+            tableBody.innerHTML = "";
+            data.forEach(inventory => {
+              const row = document.createElement("tr");
+              row.innerHTML = `
+                 <td>${inventory.invID}</td>
+                 <td>${inventory.invName}</td>
+                 <td>${inventory.invDescription}</td>
+                 <td>${inventory.invCategory}</td>
+                 <td>${inventory.invDosage}</td>
+                 <td>${inventory.itemQuantity}</td>
+                 <td>${inventory.invSupplyDate}</td>
+                 <td>${inventory.invExpiryDate}</td>
+                 <td><button class="archive-btn" data-id="${inventory.invID}">Archive</button></td>
+`;
+
+              tableBody.appendChild(row);
+            });
+          });
+      }
+
+      // Load initial data
+      fetchInventory();
+
+      // Filter by category
+      document.querySelectorAll("input[name='category']").forEach(radio => {
+        radio.addEventListener("change", () => {
+          fetchInventory(radio.value, searchInput.value);
+        });
+      });
+
+      // Filter by search
+      searchInput.addEventListener("input", () => {
+        const selectedCategory = document.querySelector("input[name='category']:checked").value;
+        fetchInventory(selectedCategory, searchInput.value);
+      });
+
+      // Archive item
+      tableBody.addEventListener("click", function (e) {
+        if (e.target.classList.contains("archive-btn")) {
+          const inventoryId = e.target.dataset.id;
+
+          const confirmArchive = confirm("Are you sure you want to archive this item?");
+          if (!confirmArchive) return;
+
+          fetch("archive_item.php", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ inventory_no: inventoryId })
+          })
+          .then(res => res.json())
+          .then(data => {
+            if (data.status === "success") {
+              e.target.closest("tr").remove();
+              alert("Item archived successfully!");
+            } else {
+              alert("Failed to archive item: " + data.message);
+            }
+          })
+          .catch(err => {
+            alert("Error archiving item.");
+            console.error(err);
+          });
+        }
+      });
+
+      // Date-Time Display
+      const datetimeSpan = document.getElementById("datetime");
+      setInterval(() => {
+        const now = new Date();
+        const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute:'2-digit', second:'2-digit' };
+        datetimeSpan.textContent = now.toLocaleString('en-US', options);
+      }, 1000);
+    });
+
+    document.getElementById("addItemBtn").addEventListener("click", () => {
+    window.location.href = "ADDITEM.html";
+  });
+
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Update Inventory</title>
+  <link rel="stylesheet" href="../Stylesheet/update.css">
+  <script src="https://kit.fontawesome.com/f543d9f8e5.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <div class="sidebar">
+    <button class="back-btn" onclick="window.location.href='INVDASH.html'">⤺ Back</button>
+    <div class="icon"><i class="fa-solid fa-clock-rotate-left fa-2x" style="color: #ffffff;"></i></div>
+    <div class="icon"><i class="fa-regular fa-bell fa-2x" style="color: #ffffff;"></i></div>
+    <div class="icon"><i class="fa-solid fa-user fa-2x" style="color: #ffffff;"></i></div>
+  </div>
+
+  <div class="main">
+    <div class="top-bar">
+      <h2>Update Inventory</h2>
+    </div>
+
+    <form class="update-form" id="update-form">
+      <label for="invID">Inventory ID:</label>
+      <input type="text" id="invID" name="invID" required>
+
+      <label for="invName">Item Name:</label>
+      <input type="text" id="invName" name="invName" required>
+
+      <label for="invDescription">Description:</label>
+      <textarea id="invDescription" name="invDescription" rows="4" required></textarea>
+
+      <label for="invCategory">Category:</label>
+      <select id="invCategory" name="invCategory" required>
+        <option value="Medicine">Medicine</option>
+        <option value="Medical Supplies">Medical Supplies</option>
+        <option value="Medical Equipment">Medical Equipment</option>
+      </select>
+
+      <label for="invDosage">Dosage:</label>
+      <input type="text" id="invDosage" name="invDosage" required>
+
+      <label for="invQuantity">Quantity:</label>
+      <input type="number" id="invQuantity" name="invQuantity" required>
+
+      <label for="invSupplyDate">Supply Date:</label>
+      <input type="date" id="invSupplyDate" name="invSupplyDate" required>
+
+      <label for="invExpiryDate">Expiration Date:</label>
+      <input type="date" id="invExpiryDate" name="invExpiryDate" required>
+
+      <button type="submit">Update Item</button>
+    </form>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const updateForm = document.getElementById("update-form");
+
+      updateForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const formData = new FormData(updateForm);
+
+        fetch("UpdateItem.php", {
+          method: "POST",
+          body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            alert("Inventory updated successfully!");
+            window.location.href = "architem.html"; // Redirect back to the archive page
+          } else {
+            alert("Failed to update inventory.");
+          }
+        })
+        .catch(error => {
+          console.error("Error updating inventory:", error);
+          alert("An error occurred while updating the inventory.");
+        });
+      });
+    });
+  </script>
+</body>
+</html>
