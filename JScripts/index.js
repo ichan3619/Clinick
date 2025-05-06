@@ -36,3 +36,41 @@ document.addEventListener('DOMContentLoaded', function() {
         modal.style.display = 'none';  // Hide the modal before leaving the page
     });
 });
+
+//Modal Doc
+document.addEventListener("DOMContentLoaded", function () {
+  const modal = document.getElementById("prescriptionModal");
+  const modalBody = document.getElementById("modalBody");
+  const closeModal = document.getElementById("closeModal");
+
+  document.querySelectorAll('.prescribe-btn').forEach(button => {
+    button.addEventListener('click', () => {
+      const patientName = button.getAttribute('data-patient-name');
+      const appointmentId = button.getAttribute('data-appointment-id');
+
+      modalBody.innerHTML = 'Loading...';
+      modal.style.display = 'block';
+
+      fetch(`prescription.php?appointment_id=${appointmentId}&patient_name=${encodeURIComponent(patientName)}`)
+        .then(response => response.text())
+        .then(html => {
+          modalBody.innerHTML = html;
+        })
+        .catch(err => {
+          modalBody.innerHTML = `<p style="color: red;">Error loading form</p>`;
+        });
+    });
+  });
+
+  closeModal.onclick = () => {
+    modal.style.display = "none";
+    modalBody.innerHTML = '';
+  };
+
+  window.onclick = (event) => {
+    if (event.target === modal) {
+      modal.style.display = "none";
+      modalBody.innerHTML = '';
+    }
+  };
+});
