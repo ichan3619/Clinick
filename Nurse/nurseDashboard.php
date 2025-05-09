@@ -4,11 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard</title>
-  <link rel="stylesheet" href="../Stylesheet/docDash.css">
+  <link rel="stylesheet" href="../Stylesheet/nurseDash.css">
   <script src="https://kit.fontawesome.com/503ea13a85.js" crossorigin="anonymous"></script>
 </head>
 <body>
   <div class="sidebar">
+    <a href="#"><i class="fa-solid fa-house fa-3x"></i></a>
+    <a href="patientsList.php"><i class="fa-solid fa-hospital-user fa-3x"></i></a>
+    <a href="#"><i class="fa-solid fa-stethoscope fa-3x"></i></a>
+    <a href="#"><i class="fa-solid fa-box fa-3x"></i></a>
   </div>
 
   <nav>

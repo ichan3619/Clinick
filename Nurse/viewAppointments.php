@@ -12,14 +12,15 @@ require '../Config/database.php';
 </head>
 <body>
   <div class="sidebar">
-    <a href="#"><i class="fa-solid fa-house fa-3x"></i></a>
+    <a href="nurseDashboard.php"><i class="fa-solid fa-house fa-3x"></i></a>
+    <a href="patientsList.php"><i class="fa-solid fa-hospital-user fa-3x"></i></a>
     <a href="#"><i class="fa-solid fa-stethoscope fa-3x"></i></a>
     <a href="#"><i class="fa-solid fa-box fa-3x"></i></a>
   </div>
 
   <div class="main">
     <nav>
-      <a href="docDashboard.php">Dashboard</a>
+      <a href="nurseDashboard.php">Dashboard</a>
       <a href="#" class="active">Admission</a>
       <a href="../Inventory/INVDASH.html">Inventory</a>
     </nav>

@@ -12,8 +12,9 @@ require '../Config/database.php';
   <script src="https://kit.fontawesome.com/503ea13a85.js" crossorigin="anonymous"></script>
 </head>
 <body>
-  <div class="sidebar">
-    <a href="#"><i class="fa-solid fa-house fa-3x"></i></a>
+<div class="sidebar">
+    <a href="nurseDashboard.php"><i class="fa-solid fa-house fa-3x"></i></a>
+    <a href="#"><i class="fa-solid fa-hospital-user fa-3x"></i></a>
     <a href="#"><i class="fa-solid fa-stethoscope fa-3x"></i></a>
     <a href="#"><i class="fa-solid fa-box fa-3x"></i></a>
   </div>
