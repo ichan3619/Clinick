@@ -33,7 +33,7 @@ CREATE TABLE clinicstaff_info (
   PRIMARY KEY (Info_Id),
   UNIQUE KEY ContactNum (ContactNum),
   KEY Name_Id (Name_Id),
-  CONSTRAINT clinicstaff_info_ibfk_1 FOREIGN KEY (Name_Id) REFERENCES clinicstaff_name (Name_Id),
+  FOREIGN KEY (Name_Id) REFERENCES clinicstaff_name (Name_Id),
   CONSTRAINT roles CHECK (clinic_roles in ('Doctor','Nurse','Clinic Staff')),
   CONSTRAINT gender CHECK (Emp_Gender in ('MALE','FEMALE'))
 );
@@ -51,7 +51,7 @@ CREATE TABLE patient_departments (
   position_id tinyint(4) NOT NULL,
   PRIMARY KEY (depID),
   KEY position_id (position_id),
-  CONSTRAINT patient_departments_ibfk_1 FOREIGN KEY (position_id) REFERENCES patient_positions (position_id)
+  FOREIGN KEY (position_id) REFERENCES patient_positions (position_id)
 );
 
 CREATE TABLE patient_name (
