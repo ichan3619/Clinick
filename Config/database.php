@@ -1,8 +1,8 @@
 <?php
-$host = 'localhost';
-$dbname = 'websys';
+$host = 'localhost:3306';
+$dbname = 'yangaclinic';
 $username = 'root';
-$password = 'admin';
+$password = '';
 try {
     $conn = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
