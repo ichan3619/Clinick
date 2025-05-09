@@ -79,9 +79,9 @@ CREATE TABLE patient_info (
   KEY PatientName_Id (PatientName_Id),
   KEY position_id (position_id),
   KEY depID (depID),
-  CONSTRAINT patient_info_ibfk_1 FOREIGN KEY (PatientName_Id) REFERENCES patient_name (PatientName_Id),
-  CONSTRAINT patient_info_ibfk_2 FOREIGN KEY (position_id) REFERENCES patient_positions (position_id),
-  CONSTRAINT patient_info_ibfk_3 FOREIGN KEY (depID) REFERENCES patient_departments (depID),
+  FOREIGN KEY (PatientName_Id) REFERENCES patient_name (PatientName_Id),
+  FOREIGN KEY (position_id) REFERENCES patient_positions (position_id),
+  FOREIGN KEY (depID) REFERENCES patient_departments (depID),
   CONSTRAINT PGender CHECK (Patient_Gender in ('MALE','FEMALE'))
 );
 
