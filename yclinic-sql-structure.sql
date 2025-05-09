@@ -67,8 +67,8 @@ CREATE TABLE patient_name (
 CREATE TABLE patient_info (
   PatientInfo_Id int(11) NOT NULL AUTO_INCREMENT,
   age int(11) DEFAULT NULL,
-  Patient_ContactNum varchar(15) DEFAULT NULL,
-  emergencyContact varchar(15) DEFAULT NULL,
+  Patient_ContactNum varchar(30) DEFAULT NULL,
+  emergencyContact varchar(30) DEFAULT NULL,
   Patient_BDate date NOT NULL,
   Patient_Gender varchar(10) DEFAULT NULL,
   position_id tinyint(4) DEFAULT NULL,
